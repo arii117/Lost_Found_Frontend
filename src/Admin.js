@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './Admin.css';
+
 const API_URL = process.env.REACT_APP_API_URL;
 
 function Admin() {
@@ -25,7 +26,7 @@ function Admin() {
 
   const fetchLostItems = async () => {
     try {
-      const response = await axios.get('${API_URL}/lost', {
+      const response = await axios.get(`${API_URL}/lost`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
       setLostItems(response.data);
@@ -37,7 +38,7 @@ function Admin() {
 
   const fetchFoundItems = async () => {
     try {
-      const response = await axios.get('${API_URL}/found', {
+      const response = await axios.get(`${API_URL}/found`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
       setFoundItems(response.data);
@@ -48,17 +49,15 @@ function Admin() {
   };
 
   const checkMatches = () => {
-    const matchResults = {}; 
+    const matchResults = {};
     lostItems.forEach((lostItem) => {
-      
-      const regex = new RegExp(`\\b${lostItem.itemName.replace(/\s+/g, '\\s*')}\\b`, 'i'); // Ignore case and allow spaces within words
+      const regex = new RegExp(`\\b${lostItem.itemName.replace(/\s+/g, '\\s*')}\\b`, 'i');
       matchResults[lostItem._id] = foundItems.some(
-        (foundItem) => regex.test(foundItem.itemName) 
+        (foundItem) => regex.test(foundItem.itemName)
       );
     });
-    setMatches(matchResults); 
+    setMatches(matchResults);
   };
-  
 
   const sendEmail = async (lostItem) => {
     const foundItem = foundItems.find(
@@ -73,11 +72,11 @@ function Admin() {
         };
 
         const response = await axios.post(
-          '${API_URL}/send-email',
+          `${API_URL}/send-email`,
           emailData,
           {
-            headers: { 
-              'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
               'Content-Type': 'application/json'
             }
           }
@@ -115,7 +114,7 @@ function Admin() {
     }
 
     try {
-      const response = await axios.post('${API_URL}/found', formData, {
+      const response = await axios.post(`${API_URL}/found`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -138,7 +137,7 @@ function Admin() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('${API_URL}/admin/login', { password });
+      const response = await axios.post(`${API_URL}/admin/login`, { password });
       localStorage.setItem('token', response.data.token);
       setAuthenticated(true);
       setPassword('');
@@ -216,75 +215,6 @@ function Admin() {
               </td>
             </tr>
           ))}
-        </tbody>
-      </table>
-
-      {/* Found Items Table */}
-      <h2>Found Items</h2>
-      <table className="admin-table">
-        <thead>
-          <tr>
-            <th>Item Name</th>
-            <th>Image</th>
-            <th>Date</th>
-            <th>Room No</th>
-          </tr>
-        </thead>
-        <tbody>
-          {foundItems.map((item) => (
-            <tr key={item._id}>
-              <td>{item.itemName}</td>
-              <td>
-                <img src={`/uploads/${item.image}`} alt="Item" className="item-image" />
-              </td>
-              <td>{item.date}</td>
-              <td>{item.roomNo}</td>
-            </tr>
-          ))}
-          {/* New Found Item Form */}
-          <tr>
-            <td colSpan="4">
-              <form onSubmit={handleNewFoundItemSubmit} className="new-item-form">
-                <div className="form-group">
-                  <label>Item Name:</label>
-                  <input
-                    type="text"
-                    name="itemName"
-                    value={newFoundItem.itemName}
-                    onChange={handleNewFoundItemChange}
-                    required
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Image:</label>
-                  <input type="file" name="image" onChange={handleNewFoundItemChange} required />
-                </div>
-                <div className="form-group">
-                  <label>Date:</label>
-                  <input
-                    type="date"
-                    name="date"
-                    value={newFoundItem.date}
-                    onChange={handleNewFoundItemChange}
-                    required
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Room No:</label>
-                  <input
-                    type="text"
-                    name="roomNo"
-                    value={newFoundItem.roomNo}
-                    onChange={handleNewFoundItemChange}
-                    required
-                  />
-                </div>
-                <button className="blue-button" type="submit">
-                  Add Item
-                </button>
-              </form>
-            </td>
-          </tr>
         </tbody>
       </table>
     </div>
