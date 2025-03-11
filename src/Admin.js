@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './Admin.css';
-const API_URL = REACT_APP_API_URL;
+const API_URL = process.env.REACT_APP_API_URL;
 
 function Admin() {
   const [lostItems, setLostItems] = useState([]);
