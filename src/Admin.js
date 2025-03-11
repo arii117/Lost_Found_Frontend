@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './Admin.css';
+const API_URL = REACT_APP_API_URL;
 
 function Admin() {
   const [lostItems, setLostItems] = useState([]);
@@ -24,7 +25,7 @@ function Admin() {
 
   const fetchLostItems = async () => {
     try {
-      const response = await axios.get('/lost', {
+      const response = await axios.get('${API_URL}/lost', {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
       setLostItems(response.data);
@@ -36,7 +37,7 @@ function Admin() {
 
   const fetchFoundItems = async () => {
     try {
-      const response = await axios.get('/found', {
+      const response = await axios.get('${API_URL}/found', {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
       setFoundItems(response.data);
@@ -72,7 +73,7 @@ function Admin() {
         };
 
         const response = await axios.post(
-          '/send-email',
+          '${API_URL}/send-email',
           emailData,
           {
             headers: { 
@@ -114,7 +115,7 @@ function Admin() {
     }
 
     try {
-      const response = await axios.post('/found', formData, {
+      const response = await axios.post('${API_URL}/found', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -137,7 +138,7 @@ function Admin() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/admin/login', { password });
+      const response = await axios.post('${API_URL}/admin/login', { password });
       localStorage.setItem('token', response.data.token);
       setAuthenticated(true);
       setPassword('');
