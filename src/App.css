@@ -1,0 +1,144 @@
+/* Reset and general styles */
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #E2DDD2; /* Background color for the entire page */
+}
+
+/* Navigation bar styles */
+.nav {
+  display: flex;
+  justify-content: flex-end;
+
+  background-color: #fff; /* Navbar background color */
+
+}
+
+.nav a {
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.63); /* Navbar link text color */
+  padding: 0.5em 1em;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.nav a.active {
+  background-color: #E2DDD2; /* Active link background color */
+}
+
+.nav a i {
+  margin-right: 0.5em; /* Space between icon and text in the navbar links */
+}
+
+/* Form page layout */
+.app-container {
+  max-width: 1200px; /* Maximum width of the app content */
+  margin: 0 auto; /* Center align content */
+  padding: 0 20px;
+}
+
+.form-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image-container {
+  width: 100vw; /* Full viewport width */
+  height: 300px; /* Adjust height as needed */
+  overflow: hidden;
+}
+
+.image-container img {
+  width: 100%;
+  height: auto;
+  object-fit: cover; /* Cover the container */
+}
+
+.form-container {
+  width: 90%;
+  max-width: 600px;
+  background-color: rgb(255, 255, 255);
+  padding: 2em;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  margin-top: -6em; /* Adjust this value to position form closer or farther from the image */
+}
+
+h1 {
+  text-align: left;
+  margin-bottom: 1em;
+  font-size: 1.2em;
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  justify-content: space-between;
+  
+}
+
+.form-group {
+  margin-bottom: 1em;
+  width:90%;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5em;
+  font-weight: 200;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 0.75em;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.submit-button {
+  background-color: #E2DDD2;
+  color: rgba(0, 0, 0, 0.751);
+  padding: 0.75em 1.5em;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1em;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  transition: background-color 0.3s ease; /* Smooth transition for button hover effect */
+}
+
+.submit-button:hover {
+  background-color: #E2DDD2;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .form-container {
+    width: 95%;
+    padding: 1em;
+    margin-top: -10em; /* Adjust for better positioning on mobile */
+  }
+
+  h1 {
+    font-size: 1.2em;
+  }
+
+  .nav {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .nav a {
+    padding: 0.5em;
+    margin: 0.5em 0;
+  }
+
+  .image-container img {
+    object-fit: cover;
+    height: 200px; /* Adjust height for mobile view */
+  }
+}
